@@ -1,0 +1,37 @@
+{
+  "variables": {
+    "PACKER_BOX_NAME": "debian-8.1.0-amd64"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "Debian_64",
+    "iso_url": "http://cdimage.debian.org/debian-cd/8.1.0/amd64/iso-cd/debian-8.1.0-amd64-netinst.iso",
+    "iso_checksum": "7844a8e84afe7a168a8f893b298d0dd06d869deffc73fef27791a252688a9d2affc6e4f46b2c5db4794054cec84365f2107c012f1025eb85826bb340134932ec",
+    "iso_checksum_type": "sha512",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "10000s",
+    "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+    "disk_size": "10000",
+    "hard_drive_interface": "sata",
+    "http_directory": "files",
+    "boot_command": [
+      "<esc><wait>",
+      "install <wait>",
+      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{ user `PACKER_BOX_NAME` }}/preseed.cfg <wait>",
+      "debian-installer=en_US.UTF-8 <wait>",
+      "auto <wait>",
+      "locale=en_US.UTF-8 <wait>",
+      "kbd-chooser/method=us <wait>",
+      "keyboard-configuration/xkb-keymap=us <wait>",
+      "netcfg/get_hostname={{ .Name }} <wait>",
+      "netcfg/get_domain=vagrantup.com <wait>",
+      "fb=false <wait>",
+      "debconf/frontend=noninteractive <wait>",
+      "console-setup/ask_detect=false <wait>",
+      "console-keymaps-at/keymap=us <wait>",
+      "<enter><wait>"
+    ]
+  }],
+  "post-processors": ["vagrant"]
+}
