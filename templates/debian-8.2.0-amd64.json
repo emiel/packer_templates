@@ -1,12 +1,12 @@
 {
   "variables": {
-    "PACKER_BOX_NAME": "debian-8.1.0-amd64"
+    "PACKER_BOX_NAME": "debian-8.2.0-amd64"
   },
   "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "Debian_64",
-    "iso_url": "http://cdimage.debian.org/debian-cd/8.1.0/amd64/iso-cd/debian-8.1.0-amd64-netinst.iso",
-    "iso_checksum": "7844a8e84afe7a168a8f893b298d0dd06d869deffc73fef27791a252688a9d2affc6e4f46b2c5db4794054cec84365f2107c012f1025eb85826bb340134932ec",
+    "iso_url": "http://cdimage.debian.org/debian-cd/8.2.0/amd64/iso-cd/debian-8.2.0-amd64-netinst.iso",
+    "iso_checksum": "923cd1bfbfa62d78aecaa92d919ee54a95c8fca834b427502847228cf06155e7243875f59279b0bf6bfd1b579cbe2f1bc80528a265dafddee9a9d2a197ef3806",
     "iso_checksum_type": "sha512",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
@@ -37,7 +37,11 @@
     {
       "type": "shell",
       "execute_command": "echo 'vagrant' | sudo -S -E sh '{{.Path}}'",
-      "scripts": [ "scripts/vagrant.sh" ]
+      "scripts": [
+        "scripts/vagrant.sh",
+        "scripts/virtualbox.sh",
+        "scripts/cleanup.sh"
+      ]
     }
   ],
   "post-processors": ["vagrant"]
